@@ -66,6 +66,10 @@ jobs:
     - name: 'Terraform setup'
       uses: hashicorp/setup-terraform@v1
  
+    - name: Terraform workspace list
+      id: workspaceList
+      run: Terraform workspace list
+
     - name: Terraform fmt
       id: fmt
       run: terraform fmt -check
@@ -83,6 +87,7 @@ jobs:
       id: plan
       run: terraform plan -out=out.tfplan
  
+
     # - name: Terraform apply
     #   id: apply
     #   run: terraform apply out.tfplan
