@@ -19,26 +19,27 @@ jobs:
     steps:
     - id: setenv
       run: |
-        if  [[ $HOST == refs/heads/main ]] ;
+        if  [[ ${{ github.ref }}" == "refs/heads/main" ]] ;
         then
             echo "::set-output name=my_env::prd"
         fi
-        if  [[ $HOST == refs/heads/develop ]] ;
+        if  [[ ${{ github.ref }}" == "refs/heads/develop" ]] ;
         then
             echo "::set-output name=my_env::dev"
         fi
-        if  [[ $HOST == refs/heads/feature/* ]] ;
+        if  [[ ${{ github.ref }}" == "refs/heads/feature/*"" ]] ;
         then
             echo "::set-output name=my_env::dev"
         fi
-        if  [[ $HOST == refs/heads/release/* ]] ;
+        if  [[ ${{ github.ref }}" == "refs/heads/release/*"" ]] ;
         then
             echo "::set-output name=my_env::tst"
         fi
-        if  [[ $HOST == refs/heads/hotfix/* ]] ;
+        if  [[ ${{ github.ref }}" == "refs/heads/hotfix/*"" ]] ;
         then
             echo "::set-output name=my_env::tst"
         fi
+
 
   terraform:
     needs: set_environment
