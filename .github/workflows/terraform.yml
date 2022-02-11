@@ -103,17 +103,12 @@ jobs:
       run: |
         terraform show -json main.tfplan > main.json
         checkov -f main.json -o junitxml > Checkov-Plan-Report.xml
-        
-    - task: PublishTestResults@2
-      inputs:
-        testResultsFormat: 'JUnit'
-        searchFolder: '$(System.DefaultWorkingDirectory)'
-        testResultsFiles: '**/*Checkov-Plan-Report.xml'
-        mergeTestResults: false
-        testRunTitle: Checkov Prod workspace plan scan
-        failTaskOnFailedTests: false
-        publishRunAttachments: true
-      displayName: Publish Test Result
+
+    - name: Publish Unit Test Results
+      uses: EnricoMi/publish-unit-test-result-action@v1
+      with:
+        check_name: Unit Test Results
+        files: "Checkov-Plan-Report.xml"
 
     # - name: Terraform apply
     #   id: apply
