@@ -18,7 +18,29 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - id: setenv
-      run: echo "::set-output name=my_env::dev"
+      run: |
+      echo "::set-output name=my_env::dev"
+
+      if  [[ $HOST == refs/heads/main ]] ;
+      then
+          echo "::set-output name=my_env::prd"
+      fi
+      if  [[ $HOST == refs/heads/develop ]] ;
+      then
+          echo "::set-output name=my_env::dev"
+      fi
+      if  [[ $HOST == refs/heads/feature/* ]] ;
+      then
+          echo "::set-output name=my_env::dev"
+      fi
+      if  [[ $HOST == refs/heads/release/* ]] ;
+      then
+          echo "::set-output name=my_env::tst"
+      fi
+      if  [[ $HOST == refs/heads/hotfix/* ]] ;
+      then
+          echo "::set-output name=my_env::tst"
+      fi
 
   terraform:
     needs: set_environment
