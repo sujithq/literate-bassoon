@@ -109,7 +109,7 @@ jobs:
       uses: EnricoMi/publish-unit-test-result-action@v1
       with:
         check_name: Unit Test Results
-        files: **/*Report.xml
+        files: terraform/**/*.xml
 
     # - name: Terraform apply
     #   id: apply
