@@ -11,7 +11,19 @@ on:
   pull_request:
  
 jobs:
+
+  set_environment:
+    outputs:
+      my_env: ${{ steps.setenv.outputs.my_env }}
+    runs-on: ubuntu-latest
+    steps:
+    - id: setenv
+      run: echo "::set-output name=my_env::dev"
+
   terraform:
+    needs: set_environment
+    environment: 
+      name: ${{ needs.set_environment.outputs.my_env }}
     name: 'Terraform'
     env:
       ARM_CLIENT_ID: ${{ secrets.AZURE_AD_CLIENT_ID }}
