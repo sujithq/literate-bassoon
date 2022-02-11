@@ -77,7 +77,9 @@ jobs:
 
     - name: Terraform workspace list
       id: workspaceList
-      run: terraform workspace list
+      run: |
+        lst=$(terraform workspace list)
+        echo $lst
 
     - name: Terraform validate
       id: validate
