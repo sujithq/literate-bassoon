@@ -19,23 +19,23 @@ jobs:
     steps:
     - id: setenv
       run: |
-        if  [[ ${{ github.ref }}" == "refs/heads/main" ]] ;
+        if  [[ ${{ github.ref }} == refs/heads/main ]] ;
         then
             echo "::set-output name=my_env::prd"
         fi
-        if  [[ ${{ github.ref }}" == "refs/heads/develop" ]] ;
+        if  [[ ${{ github.ref }} == refs/heads/develop ]] ;
         then
             echo "::set-output name=my_env::dev"
         fi
-        if  [[ ${{ github.ref }}" == "refs/heads/feature/*"" ]] ;
+        if  [[ ${{ github.ref }} == refs/heads/feature/* ]] ;
         then
             echo "::set-output name=my_env::dev"
         fi
-        if  [[ ${{ github.ref }}" == "refs/heads/release/*"" ]] ;
+        if  [[ ${{ github.ref }} == refs/heads/release/* ]] ;
         then
             echo "::set-output name=my_env::tst"
         fi
-        if  [[ ${{ github.ref }}" == "refs/heads/hotfix/*"" ]] ;
+        if  [[ ${{ github.ref }} == refs/heads/hotfix/* ]] ;
         then
             echo "::set-output name=my_env::tst"
         fi
