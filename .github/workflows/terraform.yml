@@ -68,7 +68,7 @@ jobs:
  
     - name: Terraform workspace list
       id: workspaceList
-      run: Terraform workspace list
+      run: terraform workspace list
 
     - name: Terraform fmt
       id: fmt
