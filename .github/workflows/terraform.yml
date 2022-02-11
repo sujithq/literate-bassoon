@@ -81,7 +81,7 @@ jobs:
       run: |
         lst=$(terraform workspace list)
         echo "${lst}"
-        if [[ "${lst}" == *"${{ needs.set_environment.outputs.my_env }}"* ]]; then
+        if [[ "${lst}" != *"${{ needs.set_environment.outputs.my_env }}"* ]]; then
           terraform workspace new ${{ needs.set_environment.outputs.my_env }}
         fi
         terraform workspace select ${{ needs.set_environment.outputs.my_env }}
