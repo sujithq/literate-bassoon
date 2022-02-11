@@ -102,6 +102,7 @@ jobs:
       id: scanPlan
       run: |
         terraform show -json out.tfplan > out.json
+        checkov -f out.json
         checkov -f ./out.json -o junitxml > Checkov-Plan-Report.xml
         ls -la
         cat ./Checkov-Plan-Report.xml
