@@ -75,20 +75,45 @@ jobs:
       id: init
       run: terraform init -backend-config=storage_account_name=${{ secrets.TF_STORAGE_ACCOUNT_NAME }} -backend-config=container_name=${{ secrets.TF_CONTAINER_NAME }} -backend-config=key=${{ secrets.TF_KEY }} -backend-config=resource_group_name=${{ secrets.TF_RESOURCE_GROUP_NAME }}
 
+    # select workspace
     - name: Terraform workspace list
       id: workspaceList
       run: |
         lst=$(terraform workspace list)
         echo "${lst}"
+        if [[ "${lst}" == *"${{ needs.set_environment.outputs.my_env }}"* ]]; then
+          terraform workspace new ${{ needs.set_environment.outputs.my_env }}
+        fi
+        terraform workspace select ${{ needs.set_environment.outputs.my_env }}
 
     - name: Terraform validate
       id: validate
       run: terraform validate
+
+    - name: Install checkov
+      id: installCheckov
+      run: pip install checkov
          
     - name: Terraform plan
       id: plan
       run: terraform plan -out=out.tfplan
- 
+    
+    - name: Checkov plan scan
+      id: scanPlan
+      run: |
+        terraform show -json main.tfplan > main.json
+        checkov -f main.json -o junitxml > Checkov-Plan-Report.xml
+        
+    - task: PublishTestResults@2
+      inputs:
+        testResultsFormat: 'JUnit'
+        searchFolder: '$(System.DefaultWorkingDirectory)'
+        testResultsFiles: '**/*Checkov-Plan-Report.xml'
+        mergeTestResults: false
+        testRunTitle: Checkov Prod workspace plan scan
+        failTaskOnFailedTests: false
+        publishRunAttachments: true
+      displayName: Publish Test Result
 
     # - name: Terraform apply
     #   id: apply
