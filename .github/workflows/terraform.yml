@@ -22,8 +22,6 @@ jobs:
 
   terraform:
     needs: set_environment
-    environment: 
-      name: ${{ needs.set_environment.outputs.my_env }}
     name: 'Terraform'
     env:
       ARM_CLIENT_ID: ${{ secrets.AZURE_AD_CLIENT_ID }}
@@ -31,7 +29,8 @@ jobs:
       ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
       ARM_TENANT_ID: ${{ secrets.AZURE_AD_TENANT_ID }}
     runs-on: ubuntu-latest
-    environment: dev
+    environment: 
+      name: ${{ needs.set_environment.outputs.my_env }}
  
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
