@@ -4,7 +4,9 @@ resource "azurerm_resource_group" "rg" {
 }
 
 resource "azurerm_storage_account" "st" {
-  name                = join("-", ["st", local.vs, local.env, "01"])
-  location            = azurerm_resource_group.rg.location
-  resource_group_name = azurerm_resource_group.rg.name
+  name                     = join("-", ["st", local.vs, local.env, "01"])
+  location                 = azurerm_resource_group.rg.location
+  resource_group_name      = azurerm_resource_group.rg.name
+  account_replication_type = "LRS"
+  account_tier             = ""
 }
