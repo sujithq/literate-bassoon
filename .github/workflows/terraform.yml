@@ -108,7 +108,7 @@ jobs:
       uses: EnricoMi/publish-unit-test-result-action@v1
       with:
         check_name: Unit Test Results
-        files: "Checkov-Plan-Report.xml"
+        files: ./Checkov-Plan-Report.xml
 
     # - name: Terraform apply
     #   id: apply
