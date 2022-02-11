@@ -101,8 +101,8 @@ jobs:
     - name: Checkov plan scan
       id: scanPlan
       run: |
-        terraform show -json main.tfplan > main.json
-        checkov -f main.json -o junitxml > Checkov-Plan-Report.xml
+        terraform show -json out.tfplan > out.json
+        checkov -f out.json -o junitxml > Checkov-Plan-Report.xml
 
     - name: Publish Unit Test Results
       uses: EnricoMi/publish-unit-test-result-action@v1
